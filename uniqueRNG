@@ -1,0 +1,57 @@
+int main()
+{
+    
+    enum status{ invalid = -1, valid = 1};
+    status status = valid;
+
+    int buffer = 0;
+
+    int blacklist[100];
+    for (int c = 0; c < 100; c++){ blacklist[c] = 0; }
+    int totalUsed = 1;
+
+    srand(time(NULL));
+
+    int c,c1;
+
+    bool used = false;
+    bool loop = true;
+
+    while(loop)
+    {
+        status = valid;
+        while(used == false)
+        {
+            buffer = rand()%100;
+            for ( c = 0; c <= totalUsed; c++)
+            {
+                if( (blacklist[c] == buffer) )
+                {
+                    status = invalid;
+                }
+                else if ( (blacklist[c] != buffer) && status != invalid )
+                {
+                    status = valid;
+                }
+            }
+            if ( status == valid )
+            {
+                blacklist[totalUsed] = buffer;
+                totalUsed++;
+                used = true;
+            }
+            else
+            {
+                status = valid;
+            }
+        }
+        used = false;
+        if ( totalUsed == 100)
+        {
+            loop = false;
+        }
+    }
+    for ( c1 = 0; c1 < totalUsed; c1++ )
+    {
+        cout << "Blacklist: " << '(' << c1 << ')' << blacklist[c1] << endl;
+    }
